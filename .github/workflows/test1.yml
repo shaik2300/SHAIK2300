@@ -1,15 +1,37 @@
-name: Checkout Test
+name: Generate GitHub Contribution Snake
 
 on:
+  schedule:
+    # Runs every 12 hours
+    - cron: "0 */12 * * *"
+
   workflow_dispatch:
 
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
 jobs:
-  checkout:
+  generate:
+    name: Generate Snake Animation
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "Before checkout"
+      - name: Generate GitHub Contribution Snake
+        uses: Platane/snk@v3
+        with:
+          github_user_name: shaik2300
+          outputs: |
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
-      - uses: actions/checkout@v4
-
-      - run: echo "After checkout"
+      - name: Deploy to output branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: output
+          publish_dir: ./dist
+          force_orphan: true
