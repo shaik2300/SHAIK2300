@@ -1,12 +1,15 @@
-name: Test
+name: Checkout Test
 
 on:
   workflow_dispatch:
 
 jobs:
-  hello:
+  checkout:
     runs-on: ubuntu-latest
 
     steps:
+      - run: echo "Before checkout"
 
-      - run: echo "Everything works!"
+      - uses: actions/checkout@v4
+
+      - run: echo "After checkout"
