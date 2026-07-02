@@ -1,4 +1,4 @@
-name: Snake Test
+name: Test Checkout
 
 on:
   workflow_dispatch:
@@ -8,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: Platane/snk@v3
-        with:
-          github_user_name: SHAIK2300
-          outputs: dist/snake.svg
+      - uses: actions/checkout@v4
+
+      - run: echo "Checkout worked"
